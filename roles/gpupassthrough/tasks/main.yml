@@ -1,0 +1,49 @@
+---
+- name: Create dracut module directory
+  become: true
+  file:
+    path: /usr/lib/dracut/modules.d/20vfio/
+    state: directory
+    mode: '0755'
+
+- name: Add vfio.conf
+  template:
+    src: vfio.conf
+    dest: "/etc/dracut.conf.d/vfio.conf"
+  become: true
+
+- name: Add module-setup.sh
+  template:
+    src: module-setup.sh
+    dest: "/usr/lib/dracut/modules.d/20vfio/module-setup.sh"
+  become: true
+
+- name: Add vfio-pci-override.sh
+  template:
+    src: vfio-pci-override.sh
+    dest: "/usr/lib/dracut/modules.d/20vfio/vfio-pci-override.sh"
+  become: true
+
+- name: Add 00-user.conf
+  template:
+    src: 00-user.conf
+    dest: "/etc/security/limits.d/00-user.conf"
+  vars:
+    content: "{{ created_user }}"
+  become: true
+
+- name: Add 99-vfio-permissions.rules
+  template:
+    src: 99-vfio-permissions.rules
+    dest: "/etc/udev/rules.d/99-vfio-permissions.rules"
+  become: true
+
+- name: Add 99-usb-permissions.rules
+  template:
+    src: 99-usb-permissions.rules
+    dest: "/etc/udev/rules.d/99-usb-permissions.rules"
+  become: true
+
+- name: Run dracut
+  become: true
+  command: dracut -f

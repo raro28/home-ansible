@@ -1,0 +1,60 @@
+---
+- name: Enable raro28/wdm repository
+  ansible.builtin.command: 'dnf copr enable -y raro28/wdm'
+  args:
+    creates: /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:raro28:wdm.repo
+
+- name: Add lan repository file
+  ansible.builtin.copy:
+    content: |
+      [lan:omv]
+      name=omv.lan
+      baseurl=http://omv.lan:8000/
+      skip_if_unavailable=True
+      gpgcheck=0
+      repo_gpgcheck=0
+      enabled=1
+      enabled_metadata=1
+    dest: /etc/yum.repos.d/omv.repo
+
+- name: DNF utils
+  ansible.builtin.dnf:
+    name: dnf-utils
+    state: present
+
+- name: Upgrade all packages
+  ansible.builtin.dnf:
+    name: "*"
+    state: latest
+    update_cache: true
+
+- name: Cockpit
+  ansible.builtin.dnf:
+    name: cockpit-machines,cockpit-podman,cockpit-navigator,cockpit-benchmark,cockpit-identities,cockpit-file-sharing,cockpit-pcp
+    state: present
+
+- name: Podman
+  ansible.builtin.dnf:
+    name: podman-compose,podman-docker
+    state: present
+
+- name: Top tools
+  ansible.builtin.dnf:
+    name: htop,iotop
+    state: present
+
+- name: FUSE sshfs
+  ansible.builtin.dnf:
+    name: fuse-sshfs
+    state: present
+
+- name: Bridge utils
+  ansible.builtin.dnf:
+    name: bridge-utils
+    state: present
+
+- name: Virtualization
+  ansible.builtin.dnf:
+    name: "@Virtualization"
+    state: present
+    install_weak_deps: yes

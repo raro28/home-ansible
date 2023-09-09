@@ -1,0 +1,30 @@
+---
+#https://stackoverflow.com/a/58859781
+- name: "Update hostname"
+  hostname:
+    name: "{{ new_hostname }}"
+
+- name: Update hosts file
+  become: true
+  ansible.builtin.template:
+    src: hosts.j2
+    dest: "/etc/hosts"
+    mode: 0644
+  vars:
+    content: "{{ new_hostname }}"
+
+- name: Update kernel arguments
+  become: true
+  shell: grubby --args="{{ item }}" --update-kernel=ALL
+  loop:
+    - delayacct
+    - amd_pstate=active
+    - amd_iommu=on
+    - rd.driver.pre=vfio-pci
+
+- name: Uncomment and set user_allow_other in /etc/fuse.conf
+  lineinfile:
+    path: /etc/fuse.conf
+    regexp: '^#?\s*user_allow_other'
+    line: 'user_allow_other'
+    state: present
