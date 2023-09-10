@@ -1,0 +1,14 @@
+---
+- name: Update kernel arguments
+  become: true
+  shell: grubby --args="{{ item }}" --update-kernel=ALL
+  loop:
+    - rd.driver.blacklist=nouveau
+    - modprobe.blacklist=nouveau
+    - nvidia-drm.modeset=1
+
+- name: Add nouveau-blacklist.conf
+  template:
+    src: nouveau-blacklist.conf
+    dest: "/etc/modprobe.d/nouveau-blacklist.conf "
+  become: true

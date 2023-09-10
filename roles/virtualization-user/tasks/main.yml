@@ -1,0 +1,7 @@
+---
+- name: Update user
+  user:
+    name: "{{ created_user }}"
+    state: present
+    groups: qemu,kvm,libvirt
+    append: yes

@@ -1,0 +1,6 @@
+---
+- name: Virtualization
+  ansible.builtin.dnf:
+    name: "@Virtualization"
+    state: present
+    install_weak_deps: yes

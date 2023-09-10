@@ -3,7 +3,7 @@
   user:
     name: "{{ created_user }}"
     state: present
-    groups: wheel,libvirt,input,qemu,kvm
+    groups: wheel,input
     append: yes
 
 - name: Set authorized key for user copying it from current user
@@ -16,7 +16,7 @@
   become: true
   ansible.builtin.template:
     src: sudoers.j2
-    dest: "/etc/sudoers.d/00-pi"
+    dest: "/etc/sudoers.d/00-passwordless-sudoer"
     mode: 0440
   vars:
-    content: "{{ new_hostname }}"
+    content: "{{ created_user }}"

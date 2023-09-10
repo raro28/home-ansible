@@ -1,0 +1,5 @@
+---
+- name: Podman
+  ansible.builtin.dnf:
+    name: podman-compose,podman-docker
+    state: present

@@ -1,0 +1,5 @@
+---
+- name: Cockpit
+  ansible.builtin.dnf:
+    name: cockpit-podman
+    state: present

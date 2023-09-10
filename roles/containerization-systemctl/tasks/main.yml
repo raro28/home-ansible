@@ -1,0 +1,44 @@
+---
+- name: Enable system podman
+  ansible.builtin.systemd:
+    name: podman
+    enabled: yes
+    state: started
+
+- name: Enable system podman.socket
+  ansible.builtin.systemd:
+    name: podman.socket
+    enabled: yes
+    state: started
+
+- name: Create /home/{{ created_user }}/.config/systemd/user/default.target.wants
+  file:
+    path: /home/{{ created_user }}/.config/systemd/user/default.target.wants
+    state: directory
+    owner: "{{ created_user }}"
+    group: "{{ created_user }}"
+    mode: 0750
+
+- name: Enable user podman
+  ansible.builtin.file:
+    src: /usr/lib/systemd/user/podman.service
+    dest: /home/{{ created_user }}/.config/systemd/user/default.target.wants/podman.service
+    owner: "{{ created_user }}"
+    group: "{{ created_user }}"
+    state: link
+
+- name: Create /home/{{ created_user }}/.config/systemd/user/sockets.target.wants
+  file:
+    path: /home/{{ created_user }}/.config/systemd/user/sockets.target.wants
+    state: directory
+    owner: "{{ created_user }}"
+    group: "{{ created_user }}"
+    mode: 0750
+
+- name: Enable user podman.socket
+  ansible.builtin.file:
+    src: /usr/lib/systemd/user/podman.socket
+    dest: /home/{{ created_user }}/.config/systemd/user/sockets.target.wants/podman.socket
+    owner: "{{ created_user }}"
+    group: "{{ created_user }}"
+    state: link

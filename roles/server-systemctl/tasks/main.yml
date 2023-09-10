@@ -1,0 +1,6 @@
+---
+- name: Enable system pmlogger.service
+  ansible.builtin.systemd:
+    name: pmlogger.service
+    enabled: yes
+    state: started

@@ -1,29 +1,80 @@
 ---
-- hosts: addresses
+- hosts: hostnames
   gather_facts: true
   roles:
-    - role: prereq
+    - role: hostname
       become: true
 
-- hosts: basics
+- hosts: users
   gather_facts: true
   roles:
-    - role: node_exporter
+    - role: user
       become: true
+
+- hosts: node-basics
+  gather_facts: true
+  roles:
     - role: cgroupv2
       become: true
     - role: firewalld
       become: true
+    - role: common-kernel
+      become: true
+    - role: common-packages
+      become: true
 
-- hosts: worker-nodes-basics
+- hosts: amd-node-basics
   gather_facts: true
   roles:
-    - role: packages
-    - role: systemctl
+    - role: amd-kernel
+      become: true
+
+- hosts: containerization-node-basics
+  gather_facts: true
+  roles:
+    - role: containerization-packages
+      become: true
+    - role: containerization-systemctl
+      become: true
+
+- hosts: virtualization-node-basics
+  gather_facts: true
+  roles:
+    - role: virtualization-packages
+      become: true
+    - role: virtualization-systemctl
+      become: true
+    - role: virtualization-user
+      become: true
+
+- hosts: server-node-basics
+  gather_facts: true
+  roles:
+    - role: server-packages
+      become: true
+    - role: server-systemctl
+      become: true
+
+- hosts: containerization-server-node-basics
+  gather_facts: true
+  roles:
+    - role: containerization-server-packages
+      become: true
+
+- hosts: virtualization-server-node-basics
+  gather_facts: true
+  roles:
+    - role: virtualization-server-packages
       become: true
 
 - hosts: gpu-passthrough
   gather_facts: true
   roles:
     - role: gpupassthrough
+      become: true
+
+- hosts: nvidia-workstation
+  gather_facts: true
+  roles:
+    - role: nvidia-workstation
       become: true

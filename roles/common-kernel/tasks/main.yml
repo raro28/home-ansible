@@ -1,0 +1,6 @@
+---
+- name: Update kernel arguments
+  become: true
+  shell: grubby --args="{{ item }}" --update-kernel=ALL
+  loop:
+    - delayacct

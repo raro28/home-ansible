@@ -1,0 +1,18 @@
+---
+- name: Enable libvirtd
+  ansible.builtin.systemd:
+    name: libvirtd
+    enabled: yes
+    state: started
+
+- name: Enable libvirtd.socket
+  ansible.builtin.systemd:
+    name: libvirtd.socket
+    enabled: yes
+    state: started
+
+- name: Enable libvirtd-ro.socket
+  ansible.builtin.systemd:
+    name: libvirtd-ro.socket
+    enabled: yes
+    state: started

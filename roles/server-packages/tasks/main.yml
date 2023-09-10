@@ -1,0 +1,10 @@
+---
+- name: Cockpit
+  ansible.builtin.dnf:
+    name: cockpit-navigator,cockpit-benchmark,cockpit-identities,cockpit-file-sharing,cockpit-pcp
+    state: present
+
+- name: Bridge utils
+  ansible.builtin.dnf:
+    name: bridge-utils
+    state: present

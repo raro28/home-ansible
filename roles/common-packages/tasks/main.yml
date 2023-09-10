@@ -17,30 +17,20 @@
       enabled_metadata=1
     dest: /etc/yum.repos.d/omv.repo
 
-- name: DNF utils
-  ansible.builtin.dnf:
-    name: dnf-utils
-    state: present
-
 - name: Upgrade all packages
   ansible.builtin.dnf:
     name: "*"
     state: latest
     update_cache: true
 
-- name: Cockpit
+- name: DNF utils
   ansible.builtin.dnf:
-    name: cockpit-machines,cockpit-podman,cockpit-navigator,cockpit-benchmark,cockpit-identities,cockpit-file-sharing,cockpit-pcp
-    state: present
-
-- name: Podman
-  ansible.builtin.dnf:
-    name: podman-compose,podman-docker
+    name: dnf-utils
     state: present
 
 - name: Top tools
   ansible.builtin.dnf:
-    name: htop,iotop
+    name: htop,iotop,iftop
     state: present
 
 - name: FUSE sshfs
@@ -48,13 +38,9 @@
     name: fuse-sshfs
     state: present
 
-- name: Bridge utils
-  ansible.builtin.dnf:
-    name: bridge-utils
+- name: Uncomment and set user_allow_other in /etc/fuse.conf
+  lineinfile:
+    path: /etc/fuse.conf
+    regexp: '^#?\s*user_allow_other'
+    line: 'user_allow_other'
     state: present
-
-- name: Virtualization
-  ansible.builtin.dnf:
-    name: "@Virtualization"
-    state: present
-    install_weak_deps: yes
