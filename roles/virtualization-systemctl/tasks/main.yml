@@ -16,3 +16,9 @@
     name: libvirtd-ro.socket
     enabled: yes
     state: started
+
+- name: Disable mcelog.service
+  ansible.builtin.systemd:
+    name: mcelog.service
+    enabled: no
+    state: stopped 
