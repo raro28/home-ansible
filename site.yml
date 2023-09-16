@@ -78,3 +78,9 @@
   roles:
     - role: nvidia-workstation
       become: true
+
+- hosts: easy-difussion
+  gather_facts: true
+  roles:
+    - role: easy-difussion
+      become: true

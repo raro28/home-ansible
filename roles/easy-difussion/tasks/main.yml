@@ -1,0 +1,5 @@
+---
+- name: libglvnd-glx
+  ansible.builtin.dnf:
+    name: libglvnd-glx
+    state: present
