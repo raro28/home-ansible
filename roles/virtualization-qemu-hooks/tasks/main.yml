@@ -1,0 +1,14 @@
+---
+- name: Create /etc/libvirt/hooks/
+  file:
+    path: /etc/libvirt/hooks/
+    state: directory
+    owner: root
+    group: root
+    mode: 0750
+
+- name: Add qemu hook
+  template:
+    src: qemu
+    dest: "/etc/libvirt/hooks/qemu"
+  become: true

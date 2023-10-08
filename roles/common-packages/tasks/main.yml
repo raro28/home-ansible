@@ -28,6 +28,11 @@
     name: dnf-utils
     state: present
 
+- name: Kernel Tools
+  ansible.builtin.dnf:
+    name: kernel-tools
+    state: present
+
 - name: Top tools
   ansible.builtin.dnf:
     name: htop,iotop,iftop

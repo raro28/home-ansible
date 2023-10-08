@@ -67,6 +67,12 @@
     - role: virtualization-server-packages
       become: true
 
+- hosts: virtualization-qemu-hooks
+  gather_facts: true
+  roles:
+    - role: virtualization-qemu-hooks
+      become: true
+
 - hosts: gpu-passthrough
   gather_facts: true
   roles:
