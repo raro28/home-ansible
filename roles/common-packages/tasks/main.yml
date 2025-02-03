@@ -7,15 +7,15 @@
 - name: Add lan repository file
   ansible.builtin.copy:
     content: |
-      [lan:omv]
-      name=omv.lan
-      baseurl=http://omv.lan:8000/
-      skip_if_unavailable=True
+      [rpm-home-lan]
+      name=rpm-home-lan
+      baseurl=http://rpm.home.lan/
+      skip_if_unavailable=False
       gpgcheck=0
       repo_gpgcheck=0
       enabled=1
       enabled_metadata=1
-    dest: /etc/yum.repos.d/omv.repo
+    dest: /etc/yum.repos.d/rpm-home-lan.repo 
 
 - name: Upgrade all packages
   ansible.builtin.dnf:
@@ -25,7 +25,7 @@
 
 - name: DNF utils
   ansible.builtin.dnf:
-    name: dnf-utils
+    name: dnf-utils,python3-libdnf5
     state: present
 
 - name: Kernel Tools
