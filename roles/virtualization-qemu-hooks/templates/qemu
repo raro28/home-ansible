@@ -3,11 +3,11 @@
 command=$2
 
 if [[ $command == "started" ]]; then
-    systemctl set-property --runtime -- user.slice AllowedCPUs=4,10,5,11
-    systemctl set-property --runtime -- system.slice AllowedCPUs=4,10,5,11
-    systemctl set-property --runtime -- init.scope AllowedCPUs=4,10,5,11
+    systemctl set-property --runtime -- user.slice AllowedCPUs=0,1,16,17
+    systemctl set-property --runtime -- system.slice AllowedCPUs=0,1,16,17
+    systemctl set-property --runtime -- init.scope AllowedCPUs=0,1,16,17
 elif [[ $command == "release" ]]; then
-    systemctl set-property --runtime -- user.slice AllowedCPUs=0-11
-    systemctl set-property --runtime -- system.slice AllowedCPUs=0-11
-    systemctl set-property --runtime -- init.scope AllowedCPUs=0-11
+    systemctl set-property --runtime -- user.slice AllowedCPUs=0-31
+    systemctl set-property --runtime -- system.slice AllowedCPUs=0-31
+    systemctl set-property --runtime -- init.scope AllowedCPUs=0-31
 fi
