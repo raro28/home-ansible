@@ -3,4 +3,5 @@
   become: true
   shell: grubby --args="{{ item }}" --update-kernel=ALL
   loop:
-    - amd_pstate=active
+    - amd_pstate=guided
+    - amd_prefcore=enable
